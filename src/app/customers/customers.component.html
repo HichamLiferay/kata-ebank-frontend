@@ -1,0 +1,54 @@
+<div class="container mt-2">
+    <ng-container *ngIf="customers | async as listCustomers; else failureOrLoading">
+        <div class="card">
+            <div class="card-header">Customers</div>
+            <div class="card-body">
+                <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+                    <div class="input-group">
+                        <label class="input-group-text">keyword :</label>
+                        <input type="text" formControlName="keyword" class="form-control">
+                        <button class="btn btn-info"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+                <ng-container *ngIf="listCustomers.length > 0; else noDataFound">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr scope="row" *ngFor="let c of customers | async">
+                                <td>{{c.id}}</td>
+                                <td>{{c.name}}</td>
+                                <td>{{c.email}}</td>
+                                <td>
+                                    <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
+                                        Accounts
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+                
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #failureOrLoading>
+        <ng-container *ngIf="errorMessage; else loading">
+            <div class="text-danger">
+                {{errorMessage}}
+            </div>
+        </ng-container>
+        <ng-template #loading>
+            Loading ....
+        </ng-template>
+    </ng-template>
+    <ng-template #noDataFound>
+        <div class="alert alert-warning mt-3" role="alert">No Data Found ..</div>
+    </ng-template>
+</div>

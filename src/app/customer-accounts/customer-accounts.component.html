@@ -1,0 +1,32 @@
+<div class="container  mt-2">
+<ng-container *ngIf="accounts | async as listAccounts">
+        <div class="card">
+            <div class="card-header">Accounts</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Balance</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" *ngFor="let ac of accounts | async">
+                            <td>{{ac.id}}</td>
+                            <td>{{ac.createdAt | date : 'dd-MM-yyyy'}}</td>
+                            <td>{{ac.balance}}</td>
+                            <td>
+                                <button (click)="handleCustomerOperations(ac)" class="btn btn-success">
+                                    Operations
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </ng-container>
+    
+</div>
